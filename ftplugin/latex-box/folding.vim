@@ -285,7 +285,7 @@ endfunction
 
 function! LatexBox_FoldText_title()
     let line = getline(v:foldstart)
-    let title = 'Not defined'
+    let title = ''
 
     " Preamble
     if line =~ '\s*\\documentclass'
@@ -316,6 +316,8 @@ function! LatexBox_FoldText_title()
         let title =  matchstr(line,'Fake' . sections . ':\s*\zs.*')
     elseif line =~ 'Fake' . sections
         let title =  matchstr(line, 'Fake' . sections)
+    elseif line =~ '^\s*%'
+        let title = matchstr(line, '\(%*\)\@<=.*')
     endif
 
     " Environments
